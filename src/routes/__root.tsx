@@ -1,6 +1,6 @@
 import {
-  Outlet,
   HeadContent,
+  Outlet,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
@@ -10,8 +10,9 @@ import TanStackQueryLayout from "../integrations/tanstack-query/layout.tsx";
 
 import appCss from "../styles.css?url";
 
-import type { QueryClient } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner.tsx";
 import { getUserSession } from "@/lib/auth-server.ts";
+import type { QueryClient } from "@tanstack/react-query";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -57,6 +58,7 @@ function RootComponent() {
       <Outlet />
       <TanStackRouterDevtools />
 
+      <Toaster />
       <TanStackQueryLayout />
     </RootDocument>
   );

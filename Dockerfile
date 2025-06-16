@@ -16,6 +16,7 @@ COPY . .
 RUN bun run build
 
 # Production stage
+# Production stage
 FROM oven/bun:1-slim
 
 WORKDIR /app
@@ -24,22 +25,23 @@ WORKDIR /app
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/bun.lock ./bun.lock
 
-# Copy node_modules (needed for drizzle-kit and runtime deps)
-COPY --from=builder /app/node_modules ./node_modules
+# Install only drizzle-kit for migrations
+RUN bun add drizzle-kit
 
-# Copy source files needed for migration
-COPY --from=builder /app/src ./src
+# Copy only schema and env files needed for migration
+COPY --from=builder /app/src/db ./src/db
+COPY --from=builder /app/src/env.ts ./src/env.ts
 COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
-# Copy only the built output from the builder stage
+# Copy only the built output
 COPY --from=builder /app/.output ./.output
 
 # Expose the default port
 EXPOSE 3000
 
 # Create a startup script that runs migration then starts the app
-RUN echo '#!/bin/sh\nsleep 10 && bun run db:push --force && bun run start' > /app/start.sh
+RUN echo '#!/bin/sh\nbun run db:push --force && bun run start' > /app/start.sh
 RUN chmod +x /app/start.sh
 
 # Set the command to run the startup script

@@ -29,7 +29,9 @@ services:
       - 3000:3000
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+        restart: true
 
 volumes:
   db-data:

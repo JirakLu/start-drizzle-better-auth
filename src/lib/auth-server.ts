@@ -1,7 +1,7 @@
-import { createServerFn } from "@tanstack/react-start";
-import { auth } from "./auth";
-import { getWebRequest } from "@tanstack/react-start/server";
 import { redirect } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
+import { auth } from "./auth";
 
 export const getUserSession = createServerFn({ method: "GET" }).handler(
   async () => {

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useForm } from "@tanstack/react-form";
-import { z } from "zod";
 import { signIn } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
+import { useForm } from "@tanstack/react-form";
 import { useRouter } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const loginSchema = z.object({
   email: z
@@ -37,19 +38,23 @@ export function LoginForm({
       onChange: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      const { error } = await signIn.email({
-        email: value.email,
-        password: value.password,
-        rememberMe: true,
-      });
-
-      if (!error) {
-        await router.invalidate();
-        router.navigate({ to: "/dashboard" });
-        return;
-      }
-
-      alert(error);
+      await signIn.email(
+        {
+          email: value.email,
+          password: value.password,
+          rememberMe: true,
+        },
+        {
+          onSuccess: async () => {
+            await router.invalidate();
+            router.navigate({ to: "/dashboard" });
+          },
+          onError: (ctx) => {
+            // TODO: show this in the form
+            toast.error(ctx.error.message);
+          },
+        },
+      );
     },
   });
 
