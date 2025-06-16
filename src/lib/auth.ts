@@ -3,7 +3,6 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { reactStartCookies } from "better-auth/react-start";
 
-
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -12,5 +11,5 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: false,
   },
-  plugins: [reactStartCookies()]
+  plugins: [reactStartCookies()],
 });
