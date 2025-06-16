@@ -8,8 +8,8 @@ services:
     environment:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD?:error}"
       POSTGRES_DB: "db"
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     healthcheck:
       test: ["CMD", "pg_isready"]
       interval: 10s
@@ -25,7 +25,7 @@ services:
       BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:?error}"
       BETTER_AUTH_URL: "${COOLIFY_URL:?error}"
     ports:
-      - 3000:3000
+      - "80:3000"
     restart: always
     depends_on:
       db:
