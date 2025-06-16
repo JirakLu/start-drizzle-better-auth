@@ -6,7 +6,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: "secret"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD?:error}"
       POSTGRES_DB: "db"
     ports:
       - "5432:5432"
@@ -21,10 +21,9 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      # DATABASE_URL: "${DATABASE_URL?:error}"
-      DATABASE_URL: "postgres://postgres:secret@db:5432/db"
+      DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD?:error}@db:5432/db"
       BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:?error}"
-      BETTER_AUTH_URL: "${BETTER_AUTH_URL:?error}"
+      BETTER_AUTH_URL: "${COOLIFY_URL:?error}"
     ports:
       - 3000:3000
     restart: always
