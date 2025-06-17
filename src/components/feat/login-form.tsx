@@ -121,9 +121,7 @@ export function LoginForm({
                 )}
               </form.Field>
 
-              <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting]}
-              >
+              <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]} >
                 {([canSubmit, isSubmitting]) => (
                   <div className="flex flex-col gap-3">
                     <Button

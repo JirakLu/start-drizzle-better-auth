@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signUp } from "@/lib/auth-client";
@@ -19,10 +13,7 @@ import { z } from "zod";
 const registerSchema = z
   .object({
     name: z.string().min(1, "Name is required"),
-    email: z
-      .string()
-      .min(1, "Email is required")
-      .email("Please enter a valid email address"),
+    email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string().min(8, "Please confirm your password"),
   })
@@ -76,9 +67,7 @@ export function RegisterForm({
       <Card>
         <CardHeader>
           <CardTitle>Create your account</CardTitle>
-          <CardDescription>
-            Enter your information below to create your account
-          </CardDescription>
+          <CardDescription>Enter your information below to create your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -175,16 +164,10 @@ export function RegisterForm({
                 )}
               </form.Field>
 
-              <form.Subscribe
-                selector={(state) => [state.canSubmit, state.isSubmitting]}
-              >
+              <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
                 {([canSubmit, isSubmitting]) => (
                   <div className="flex flex-col gap-3">
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={!canSubmit}
-                    >
+                    <Button type="submit" className="w-full" disabled={!canSubmit}>
                       {isSubmitting ? "Creating account..." : "Create account"}
                     </Button>
                   </div>
