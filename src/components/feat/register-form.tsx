@@ -1,11 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signUp } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { linkOptions } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -13,7 +19,10 @@ import { z } from "zod";
 const registerSchema = z
   .object({
     name: z.string().min(1, "Name is required"),
-    email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Please enter a valid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string().min(8, "Please confirm your password"),
   })
@@ -22,7 +31,12 @@ const registerSchema = z
     path: ["confirmPassword"],
   });
 
-export function RegisterForm({ className, ...props }: React.ComponentProps<"div">) {
+export function RegisterForm({
+  className,
+  redirect,
+  fallbackRoute,
+  ...props
+}: React.ComponentProps<"div"> & { redirect?: string; fallbackRoute: string }) {
   const router = useRouter();
 
   const form = useForm({
@@ -46,7 +60,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
         {
           onSuccess: async () => {
             await router.invalidate();
-            router.navigate({ to: "/dashboard" });
+            router.navigate({ to: redirect || fallbackRoute });
           },
           onError: (ctx) => {
             // TODO: show this in the form
@@ -62,7 +76,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
       <Card>
         <CardHeader>
           <CardTitle>Create your account</CardTitle>
-          <CardDescription>Enter your information below to create your account</CardDescription>
+          <CardDescription>
+            Enter your information below to create your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -159,15 +175,27 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<"div"
                 )}
               </form.Field>
 
-              <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting]}
+              >
                 {([canSubmit, isSubmitting]) => (
                   <div className="flex flex-col gap-3">
-                    <Button type="submit" className="w-full" disabled={!canSubmit}>
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={!canSubmit}
+                    >
                       {isSubmitting ? "Creating account..." : "Create account"}
                     </Button>
                   </div>
                 )}
               </form.Subscribe>
+            </div>
+            <div className="mt-4 text-center text-sm">
+              Already have an account?{" "}
+              <Link className="underline underline-offset-4" to="/login">
+                Login
+              </Link>
             </div>
           </form>
         </CardContent>
