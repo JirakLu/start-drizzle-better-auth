@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "@/lib/auth-client";
@@ -16,10 +10,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address"),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -65,9 +56,7 @@ export function LoginForm({
       <Card>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardDescription>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -121,14 +110,10 @@ export function LoginForm({
                 )}
               </form.Field>
 
-              <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]} >
+              <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
                 {([canSubmit, isSubmitting]) => (
                   <div className="flex flex-col gap-3">
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={!canSubmit}
-                    >
+                    <Button type="submit" className="w-full" disabled={!canSubmit}>
                       {isSubmitting ? "Logging in..." : "Login"}
                     </Button>
                   </div>
