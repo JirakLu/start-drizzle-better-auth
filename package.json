@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "start": "bun run .output/server/index.mjs",
-    "build": "tsc --noEmit && NITRO_PRESET=bun vite build",
+    "build": "tsc --noEmit && vite build",
     "serve": "vite preview",
     "test": "vitest run",
-    "format": "biome format",
-    "lint": "biome lint",
+    "format": "bunx ultracite format",
+    "lint": "bunx ultracite lint",
     "check": "tsc --noEmit && biome check",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -42,10 +42,10 @@
     "tailwindcss": "^4.0.6",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "zod": "^3.24.2"
+    "zod": "^4.0.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.1.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/pg": "^8.15.4",
@@ -58,6 +58,7 @@
     "tsx": "^4.20.2",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5.7.2",
+    "ultracite": "5.0.35",
     "vitest": "^3.0.5",
     "web-vitals": "^4.2.4"
   },

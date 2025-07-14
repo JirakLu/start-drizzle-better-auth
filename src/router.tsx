@@ -1,6 +1,6 @@
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
-import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
+import { getContext } from "./integrations/tanstack-query/root-provider";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -13,12 +13,12 @@ export const createRouter = () => {
     createTanstackRouter({
       routeTree,
       context: {
-        ...TanstackQuery.getContext(),
+        ...getContext(),
       },
       scrollRestoration: true,
       defaultPreloadStaleTime: 0,
     }),
-    TanstackQuery.getContext().queryClient,
+    getContext().queryClient
   );
 
   return router;

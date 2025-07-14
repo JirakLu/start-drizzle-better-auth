@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+import { BookCheckIcon, Command, LogOutIcon, TestTubeIcon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,8 +11,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router";
-import { BookCheckIcon, Command, LogOutIcon, TestTubeIcon } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
